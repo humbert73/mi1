@@ -16,7 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.moreauhu.testjeu.entity.RepeatListener;
-import com.example.moreauhu.testjeu.entity.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     private Integer work = 20;
     private Integer rest = 10;
     private Integer cycles = 8;
+    private TabataFactory tabataFactory = new TabataFactory();
 
     static final int REPEAT_LISTENER_INITIAL_INTERVAL = 400;
     static final int REPEAT_LISTENER_NORMAL_INTERVAL = 50;
@@ -244,15 +246,6 @@ public class MainActivity extends AppCompatActivity
         Integer cyclesNumber = Integer.valueOf((String) cyclesTextView.getText());
 
         //TODO: implements Parceble
-        Tabata tabata = new Tabata(
-                "quick",
-                prepareTime,
-                workTime,
-                restTime,
-                cyclesNumber
-        );
-        tabata.save();
-
-        return tabata;
+        return this.tabataFactory.addOrUpdateTabata("quick", prepareTime, workTime, restTime, cyclesNumber);
     }
 }

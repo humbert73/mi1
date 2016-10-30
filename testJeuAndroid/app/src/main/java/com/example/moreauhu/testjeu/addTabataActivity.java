@@ -10,7 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.moreauhu.testjeu.entity.RepeatListener;
-import com.example.moreauhu.testjeu.entity.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
+
+import java.util.List;
 
 public class addTabataActivity extends AppCompatActivity {
 
@@ -23,6 +26,7 @@ public class addTabataActivity extends AppCompatActivity {
     private Integer work = 20;
     private Integer rest = 10;
     private Integer cycles = 8;
+    private TabataFactory tabataFactory = new TabataFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +96,6 @@ public class addTabataActivity extends AppCompatActivity {
         Integer restTime         = Integer.valueOf((String)restTextView.getText());
         Integer cyclesNumber     = Integer.valueOf((String)cyclesTextView.getText());
 
-        //TODO: implements Parceble
-        Tabata tabata = new Tabata(name, prepareTime, workTime, restTime, cyclesNumber);
-        tabata.save();
+        this.tabataFactory.addOrUpdateTabata(name, prepareTime, workTime, restTime, cyclesNumber);
     }
 }

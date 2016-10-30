@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.moreauhu.testjeu.entity.State;
-import com.example.moreauhu.testjeu.entity.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
 
 import java.util.ArrayList;
 
@@ -105,7 +105,7 @@ public class tabataActivity extends AppCompatActivity {
     private int timeElapsed;
 
     private  ArrayList<Tabata> programme;
-    private int etape_restante = 0;
+    private int etape_restante = 1;
 
     private Tabata tabata;
     private int cyclesNumber;
@@ -295,8 +295,10 @@ public class tabataActivity extends AppCompatActivity {
     //return time value of the new state;
     private void changeState() {
         if (state == State.WORK) {
+            time = this.tabata.getRestTime();
             state = State.REST;
         } else {
+            time = this.tabata.getWorkTime();
             state = State.WORK;
             cyclesNumber--;
         }

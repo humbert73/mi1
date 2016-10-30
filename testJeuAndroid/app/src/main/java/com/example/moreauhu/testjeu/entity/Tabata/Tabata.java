@@ -1,4 +1,4 @@
-package com.example.moreauhu.testjeu.entity;
+package com.example.moreauhu.testjeu.entity.Tabata;
 
 import com.orm.SugarRecord;
 
@@ -9,11 +9,11 @@ import java.io.Serializable;
  */
 
 public class Tabata extends SugarRecord implements Serializable {
-    String name;
-    int prepareTime;
-    int workTime;
-    int restTime;
-    int cyclesNumber;
+    private String name;
+    private int prepareTime;
+    private int workTime;
+    private int restTime;
+    private int cyclesNumber;
 
     // Default constructor is necessary for SugarRecord
     public Tabata() {
@@ -45,5 +45,21 @@ public class Tabata extends SugarRecord implements Serializable {
 
     public int getCyclesNumber() {
         return cyclesNumber;
+    }
+
+    public void setPrepareTime(int prepareTime) {
+        this.prepareTime = prepareTime;
+    }
+
+    public void setWorkTime(int workTime) {
+        this.workTime = workTime;
+    }
+
+    public void setRestTime(int restTime) {
+        this.restTime = restTime;
+    }
+
+    public void setCyclesNumber(int cyclesNumber) {
+        this.cyclesNumber = cyclesNumber;
     }
 }

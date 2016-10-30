@@ -1,5 +1,6 @@
 package com.example.moreauhu.testjeu.entity;
 
+import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
 import com.orm.SugarRecord;
 
 import java.io.Serializable;

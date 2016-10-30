@@ -1,20 +1,13 @@
 package com.example.moreauhu.testjeu;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.moreauhu.testjeu.entity.Programme;
-import com.example.moreauhu.testjeu.entity.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
 
 import java.util.ArrayList;
 
