@@ -24,4 +24,5 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_test">test</string>
+    <string name="title_activity_tabata_manager">tabataManagerActivity</string>
 </resources>

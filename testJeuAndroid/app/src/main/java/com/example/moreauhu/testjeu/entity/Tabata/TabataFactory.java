@@ -1,5 +1,6 @@
 package com.example.moreauhu.testjeu.entity.Tabata;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,6 +19,14 @@ public class TabataFactory {
         tabata.save();
 
         return tabata;
+    }
+
+    public void deleteTabatasByNames(ArrayList<String> tabatasNames)
+    {
+        for (String name : tabatasNames) {
+            Tabata tabata = this.findTabataByName(name);
+            tabata.delete();
+        }
     }
 
     private void updateTabata(Tabata tabata, int prepareTime, int workTime, int restTime, int cyclesNumber) {

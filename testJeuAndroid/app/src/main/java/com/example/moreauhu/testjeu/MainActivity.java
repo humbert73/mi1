@@ -57,24 +57,17 @@ public class MainActivity extends AppCompatActivity
             this.restoreSavedValues(savedInstanceState);
         }
 
-        init();
-        initValues();
-        initRepeatImageButtons();
+        this.init();
     }
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        //this.updateValues();
         savedInstanceState.putInt(STATE_PREPARE, this.prepare);
         savedInstanceState.putInt(STATE_WORK, this.work);
         savedInstanceState.putInt(STATE_REST, this.rest);
         savedInstanceState.putInt(STATE_CYCLES, this.cycles);
 
         super.onSaveInstanceState(savedInstanceState);
-    }
-
-    private void updateValues() {
-        //this.prepare = ((TextView)findViewById(R.id.))
     }
 
     @Override
@@ -118,13 +111,12 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_add_tabata) {
             Intent intent = new Intent(this, addTabataActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_gestion_tabata) {
+            Intent intent = new Intent(this, tabataManagerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_add_programme) {
             Intent intent = new Intent(this, addProgrammeActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gestion_tabata) {
-
-        } else if (id == R.id.nav_gestion_programme) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

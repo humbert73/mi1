@@ -42,6 +42,10 @@
             android:name=".addTabataActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity android:name=".addProgrammeActivity" />
+        <activity
+            android:name=".tabataManagerActivity"
+            android:label="@string/title_activity_tabata_manager"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
