@@ -216,7 +216,7 @@ public class tabataActivity extends AppCompatActivity {
             this.etape_restante = programme.size();
             this.tabata = this.getCurrentTabata();
         } else {
-            this.tabata = (Tabata)this.getIntent().getSerializableExtra("tabata");
+            this.tabata = this.getIntent().getParcelableExtra("tabata");
         }
         this.initValues();
     }
@@ -231,6 +231,7 @@ public class tabataActivity extends AppCompatActivity {
         this.cyclesNumber = this.tabata.getCyclesNumber();
         this.time  = tabata.getPrepareTime();
         this.state = State.PREPARE;
+        this.updateDisplay(this.state);
         this.initTimerValues();
     }
 
@@ -306,14 +307,6 @@ public class tabataActivity extends AppCompatActivity {
         this.updateDisplay(state);
     }
 
-    private void updateDisplay(State state) {
-        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.fullscreen_content_controls);
-        TextView title = (TextView) findViewById(R.id.title_state);
-
-        viewGroup.setBackgroundColor(state.getColor());
-        title.setText(state.getTitle());
-    }
-
     public void onClickPlayPause(View v) {
         ImageButton imageButton = (ImageButton) findViewById(R.id.playPause);
         String tag = (String)imageButton.getTag();
@@ -339,6 +332,14 @@ public class tabataActivity extends AppCompatActivity {
         // Lancement de updateTimerThread
         startTime = SystemClock.uptimeMillis();
         customHandler.postDelayed(updateTimerThread, 0);
+    }
+
+    private void updateDisplay(State state) {
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.fullscreen_content_controls);
+        TextView title = (TextView) findViewById(R.id.title_state);
+
+        viewGroup.setBackgroundColor(state.getColor());
+        title.setText(state.getTitle());
     }
     /*------------------------TABATA PART------------------------*/
 }
