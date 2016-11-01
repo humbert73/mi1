@@ -23,18 +23,24 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     //  VALUES
-    static final String STATE_PREPARE = "prepare";
-    static final String STATE_WORK = "work";
-    static final String STATE_REST = "rest";
-    static final String STATE_CYCLES = "cycles";
-    private Integer prepare = 10;
-    private Integer work = 20;
-    private Integer rest = 10;
-    private Integer cycles = 8;
-    private TabataFactory tabataFactory = new TabataFactory();
-
     static final int REPEAT_LISTENER_INITIAL_INTERVAL = 400;
-    static final int REPEAT_LISTENER_NORMAL_INTERVAL = 50;
+    static final int REPEAT_LISTENER_NORMAL_INTERVAL  = 50;
+
+    static final String  STATE_PREPARE   = "prepare";
+    static final String  STATE_WORK      = "work";
+    static final String  STATE_REST      = "rest";
+    static final String  STATE_CYCLES    = "cycles";
+    static final Integer DEFAULT_PREPARE = 10;
+    static final Integer DEFAULT_WORK    = 20;
+    static final Integer DEFAULT_REST    = 10;
+    static final Integer DEFAULT_CYCLES  = 8;
+
+    private Integer prepare = DEFAULT_PREPARE;
+    private Integer work = DEFAULT_WORK;
+    private Integer rest = DEFAULT_REST;
+    private Integer cycles = DEFAULT_CYCLES;
+
+    private TabataFactory tabataFactory = new TabataFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +69,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         savedInstanceState.putInt(STATE_PREPARE, this.prepare);
-        savedInstanceState.putInt(STATE_WORK, this.work);
-        savedInstanceState.putInt(STATE_REST, this.rest);
-        savedInstanceState.putInt(STATE_CYCLES, this.cycles);
+        savedInstanceState.putInt(STATE_WORK   , this.work);
+        savedInstanceState.putInt(STATE_REST   , this.rest);
+        savedInstanceState.putInt(STATE_CYCLES , this.cycles);
 
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -180,9 +186,9 @@ public class MainActivity extends AppCompatActivity
 
     private void restoreSavedValues(Bundle savedInstanceState) {
         this.prepare = savedInstanceState.getInt(STATE_PREPARE);
-        this.work = savedInstanceState.getInt(STATE_WORK);
-        this.rest = savedInstanceState.getInt(STATE_REST);
-        this.cycles = savedInstanceState.getInt(STATE_CYCLES);
+        this.work    = savedInstanceState.getInt(STATE_WORK);
+        this.rest    = savedInstanceState.getInt(STATE_REST);
+        this.cycles  = savedInstanceState.getInt(STATE_CYCLES);
     }
 
     private void init() {
@@ -197,7 +203,7 @@ public class MainActivity extends AppCompatActivity
         ((TextView) findViewById(R.id.number_cycles)).setText(this.cycles.toString());
     }
 
-    private void initRepeatImageButtons() {
+    public void initRepeatImageButtons() {
         initImageButtonOfLayout((RelativeLayout) findViewById(R.id.label_prepare).getParent());
         initImageButtonOfLayout((RelativeLayout) findViewById(R.id.label_work).getParent());
         initImageButtonOfLayout((RelativeLayout) findViewById(R.id.label_rest).getParent());
@@ -229,15 +235,15 @@ public class MainActivity extends AppCompatActivity
 
     private Tabata createTabata() {
         TextView prepareTextView = (TextView) findViewById(R.id.number_prepare);
-        TextView workTextView = (TextView) findViewById(R.id.number_work);
-        TextView restTextView = (TextView) findViewById(R.id.number_rest);
-        TextView cyclesTextView = (TextView) findViewById(R.id.number_cycles);
-        Integer prepareTime = Integer.valueOf((String) prepareTextView.getText());
-        Integer workTime = Integer.valueOf((String) workTextView.getText());
-        Integer restTime = Integer.valueOf((String) restTextView.getText());
+        TextView workTextView    = (TextView) findViewById(R.id.number_work);
+        TextView restTextView    = (TextView) findViewById(R.id.number_rest);
+        TextView cyclesTextView  = (TextView) findViewById(R.id.number_cycles);
+        Integer prepareTime  = Integer.valueOf((String) prepareTextView.getText());
+        Integer workTime     = Integer.valueOf((String) workTextView.getText());
+        Integer restTime     = Integer.valueOf((String) restTextView.getText());
         Integer cyclesNumber = Integer.valueOf((String) cyclesTextView.getText());
 
         //TODO: implements Parceble
-        return this.tabataFactory.addOrUpdateTabata("quick", prepareTime, workTime, restTime, cyclesNumber);
+        return this.tabataFactory.addOrReplaceTabata("quick", prepareTime, workTime, restTime, cyclesNumber);
     }
 }

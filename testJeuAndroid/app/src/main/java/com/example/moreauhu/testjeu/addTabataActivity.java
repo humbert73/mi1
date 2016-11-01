@@ -13,29 +13,64 @@ import com.example.moreauhu.testjeu.entity.RepeatListener;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
 import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
 
-import java.util.List;
-
 public class addTabataActivity extends AppCompatActivity {
 
     //  VALUES
-    static final String STATE_PREPARE = "prepare";
-    static final String STATE_WORK = "work";
-    static final String STATE_REST = "rest";
-    static final String STATE_CYCLES = "cycles";
-    private Integer prepare = 10;
-    private Integer work = 20;
-    private Integer rest = 10;
-    private Integer cycles = 8;
+    static final String  STATE_PREPARE   = "prepare";
+    static final String  STATE_WORK      = "work";
+    static final String  STATE_REST      = "rest";
+    static final String  STATE_CYCLES    = "cycles";
+
+    private Integer prepare = MainActivity.DEFAULT_PREPARE;
+    private Integer work    = MainActivity.DEFAULT_WORK;
+    private Integer rest    = MainActivity.DEFAULT_REST;
+    private Integer cycles  = MainActivity.DEFAULT_CYCLES;
+
     private TabataFactory tabataFactory = new TabataFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tabata);
-        initRepeatImageButtons();
+
+        if (savedInstanceState != null) {
+            this.restoreSavedValues(savedInstanceState);
+        }
+
+        this.init();
     }
 
-    public void initRepeatImageButtons() {
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putInt(STATE_PREPARE, this.prepare);
+        savedInstanceState.putInt(STATE_WORK   , this.work);
+        savedInstanceState.putInt(STATE_REST   , this.rest);
+        savedInstanceState.putInt(STATE_CYCLES , this.cycles);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+    private void restoreSavedValues(Bundle savedInstanceState) {
+        this.prepare = savedInstanceState.getInt(STATE_PREPARE);
+        this.work    = savedInstanceState.getInt(STATE_WORK);
+        this.rest    = savedInstanceState.getInt(STATE_REST);
+        this.cycles  = savedInstanceState.getInt(STATE_CYCLES);
+    }
+
+    private void init() {
+        this.initValues();
+        this.initRepeatImageButtons();
+    }
+
+    private void initValues() {
+        ((TextView) findViewById(R.id.number_prepare)).setText(this.prepare.toString());
+        ((TextView) findViewById(R.id.number_work)).setText(this.work.toString());
+        ((TextView) findViewById(R.id.number_rest)).setText(this.rest.toString());
+        ((TextView) findViewById(R.id.number_cycles)).setText(this.cycles.toString());
+    }
+
+    private void initRepeatImageButtons() {
         initImageButtonOfLayout((RelativeLayout) findViewById(R.id.label_prepare).getParent());
         initImageButtonOfLayout((RelativeLayout) findViewById(R.id.label_work).getParent());
         initImageButtonOfLayout((RelativeLayout) findViewById(R.id.label_rest).getParent());
@@ -45,35 +80,38 @@ public class addTabataActivity extends AppCompatActivity {
     private void initImageButtonOfLayout(RelativeLayout layout) {
         ImageButton buttonMinus = (ImageButton) layout.getChildAt(2);
         ImageButton buttonPlus = (ImageButton) layout.getChildAt(3);
-        buttonMinus.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickOnMinus(v);
-            }
-        }));
-        buttonPlus.setOnTouchListener(new RepeatListener(400, 100, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickOnPlus(v);
-            }
-        }));
+        buttonMinus.setOnTouchListener(
+                new RepeatListener(
+                        MainActivity.REPEAT_LISTENER_INITIAL_INTERVAL,
+                        MainActivity.REPEAT_LISTENER_NORMAL_INTERVAL,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onClickOnMinus(v);
+                            }
+                        }));
+        buttonPlus.setOnTouchListener(
+                new RepeatListener(
+                        MainActivity.REPEAT_LISTENER_INITIAL_INTERVAL,
+                        MainActivity.REPEAT_LISTENER_NORMAL_INTERVAL,
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onClickOnPlus(v);
+                            }
+                        }));
     }
 
     public void onClickOnMinus(View v) {
-        RelativeLayout layout = (RelativeLayout) v.getParent();
-        TextView textView = (TextView) layout.getChildAt(1);
-        Integer number = Integer.valueOf((String) textView.getText());
-        number = number - 1;
-        textView.setText(number.toString());
+        TextView textView = this.getTextViewLinkedOfTheButton(v);
+        Integer newValue = this.appliedActionOnValueByTextViewId(textView.getId(), "minus");
+        textView.setText(newValue.toString());
     }
 
     public void onClickOnPlus(View v) {
-        RelativeLayout layout = (RelativeLayout) v.getParent();
-        TextView textView = (TextView) layout.getChildAt(1);
-        Integer number = Integer.valueOf((String) textView.getText());
-        number = number + 1;
-        textView.setText(number.toString());
-        //TODO: update()
+        TextView textView = this.getTextViewLinkedOfTheButton(v);
+        Integer newValue = this.appliedActionOnValueByTextViewId(textView.getId(), "plus");
+        textView.setText(newValue.toString());
     }
 
     public void onClickAdd(View v) {
@@ -81,6 +119,40 @@ public class addTabataActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    private TextView getTextViewLinkedOfTheButton(View v) {
+        RelativeLayout layout = (RelativeLayout) v.getParent();
+        return (TextView) layout.getChildAt(1);
+    }
+
+    private int appliedActionOnValueByTextViewId(int id, String action) {
+        int value = 0;
+        if (id == R.id.number_prepare) {
+            value = this.takeActionOnValue(this.prepare, action);
+            this.prepare = value;
+        } else if (id == R.id.number_work) {
+            value = this.takeActionOnValue(this.work, action);
+            this.work = value;
+        } else if (id == R.id.number_rest) {
+            value = this.takeActionOnValue(this.rest, action);
+            this.rest = value;
+        } else if (id == R.id.number_cycles) {
+            value = this.takeActionOnValue(this.cycles, action);
+            this.cycles = value;
+        }
+
+        return value;
+    }
+
+    private int takeActionOnValue(int value, String action) {
+        if (action.equals("minus")) {
+            value--;
+        } else if (action.equals("plus")) {
+            value++;
+        }
+
+        return value;
     }
 
     private void createTabata() {
@@ -96,6 +168,6 @@ public class addTabataActivity extends AppCompatActivity {
         Integer restTime         = Integer.valueOf((String)restTextView.getText());
         Integer cyclesNumber     = Integer.valueOf((String)cyclesTextView.getText());
 
-        this.tabataFactory.addOrUpdateTabata(name, prepareTime, workTime, restTime, cyclesNumber);
+        this.tabataFactory.addOrReplaceTabata(name, prepareTime, workTime, restTime, cyclesNumber);
     }
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TabataFactory {
 
-    public Tabata addOrUpdateTabata(String name, int prepareTime, int workTime, int restTime, int cyclesNumber) {
+    public Tabata addOrReplaceTabata(String name, int prepareTime, int workTime, int restTime, int cyclesNumber) {
         Tabata tabata = this.findTabataByName(name);
         if (tabata != null) {
             this.updateTabata(tabata, prepareTime, workTime, restTime, cyclesNumber);

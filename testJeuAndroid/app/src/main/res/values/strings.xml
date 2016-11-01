@@ -5,8 +5,9 @@
     <string name="label_rest">Rest</string>
     <string name="label_cycles">Cycles</string>
 
-    <string name="button_start">START</string>
-    <string name="button_ajouter">Ajouter</string>
+    <string name="button_start">Start</string>
+    <string name="button_add">Ajouter</string>
+    <string name="button_delete">Supprimer</string>
 
 
     <string name="button_plus">+</string>

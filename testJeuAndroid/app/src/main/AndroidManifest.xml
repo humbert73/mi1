@@ -5,7 +5,7 @@
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_work"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -15,7 +15,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -38,9 +37,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_tabata_full_screen"
             android:theme="@style/FullscreenTheme" />
-        <activity
-            android:name=".addTabataActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".addTabataActivity" />
         <activity android:name=".addProgrammeActivity" />
         <activity
             android:name=".tabataManagerActivity"

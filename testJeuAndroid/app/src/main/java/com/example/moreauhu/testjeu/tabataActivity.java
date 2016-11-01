@@ -212,7 +212,7 @@ public class tabataActivity extends AppCompatActivity {
 
         // Initialisation en fonction du lancement en mode quick start ou d'un programme
         if ((ArrayList<Tabata>) getIntent().getSerializableExtra("programme") != null) {
-            this.programme =(ArrayList<Tabata>) getIntent().getSerializableExtra("programme");
+            this.programme = (ArrayList<Tabata>) getIntent().getSerializableExtra("programme");
             this.etape_restante = programme.size();
             this.tabata = this.getCurrentTabata();
         } else {

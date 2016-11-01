@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorWork"
-        android:text="Supprimer"
+        android:text="@string/button_delete"
+        android:textColor="@color/red"
         android:onClick="onClickOnDelete"/>
 
     <RelativeLayout

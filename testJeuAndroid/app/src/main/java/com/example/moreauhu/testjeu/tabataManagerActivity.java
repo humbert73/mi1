@@ -37,6 +37,26 @@ public class tabataManagerActivity extends AppCompatActivity {
         this.init();
     }
 
+    public void onClickOnTabata(View v) {
+        Button button = (Button) v;
+        if (! buttonsSelected.contains(button)) {
+            buttonsSelected.add(button);
+            button.setBackgroundColor(State.WORK.getColor());
+        } else {
+            buttonsSelected.remove(button);
+            button.setBackgroundColor(State.REST.getColor());
+        }
+    }
+
+    public void onClickOnDelete(View v) {
+        ArrayList<String> tabataNames = new ArrayList<>();
+        for (Button button : buttonsSelected) {
+            tabataNames.add((String)button.getText());
+        }
+        this.tabataFactory.deleteTabatasByNames(tabataNames);
+        this.updateDisplay();
+    }
+
     private void init() {
         this.initFabIcone();
         this.initTabatas();
@@ -64,35 +84,24 @@ public class tabataManagerActivity extends AppCompatActivity {
                     onClickOnTabata(v);
                 }
             });
-            button.setText(tabata.getName());
+            button.setText(this.createTabataTextInformation(tabata));
             layout.addView(button);
             this.buttons.add(button);
         }
+    }
+
+    private String createTabataTextInformation(Tabata tabata) {
+        String separation = ", ";
+        return tabata.getName() + " (" +
+            State.PREPARE.getShortName() + tabata.getPrepareTime() + separation +
+            State.WORK.getShortName()    + tabata.getWorkTime()    + separation +
+            State.REST.getShortName()    + tabata.getRestTime()    +
+            ") x" + tabata.getCyclesNumber();
     }
 
     private void updateDisplay() {
         LinearLayout layout = (LinearLayout) findViewById(R.id.tabatas);
         layout.removeAllViewsInLayout();
         init();
-    }
-
-    public void onClickOnTabata(View v) {
-        Button button = (Button) v;
-        if (! buttonsSelected.contains(button)) {
-            buttonsSelected.add(button);
-            button.setBackgroundColor(State.WORK.getColor());
-        } else {
-            buttonsSelected.remove(button);
-            button.setBackgroundColor(State.REST.getColor());
-        }
-    }
-
-    public void onClickOnDelete(View v) {
-        ArrayList<String> tabataNames = new ArrayList<>();
-        for (Button button : buttonsSelected) {
-            tabataNames.add((String)button.getText());
-        }
-        this.tabataFactory.deleteTabatasByNames(tabataNames);
-        this.updateDisplay();
     }
 }
