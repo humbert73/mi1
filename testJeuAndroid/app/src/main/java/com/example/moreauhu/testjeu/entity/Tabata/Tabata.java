@@ -1,5 +1,8 @@
 package com.example.moreauhu.testjeu.entity.Tabata;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.orm.SugarRecord;
 
 import java.io.Serializable;
@@ -8,7 +11,7 @@ import java.io.Serializable;
  * Created by moreauhu on 04/10/16.
  */
 
-public class Tabata extends SugarRecord implements Serializable {
+public class Tabata extends SugarRecord implements Parcelable {
     private String name;
     private int prepareTime;
     private int workTime;
@@ -25,6 +28,35 @@ public class Tabata extends SugarRecord implements Serializable {
         this.workTime     = workTime;
         this.restTime     = restTime;
         this.cyclesNumber = cyclesNumber;
+    }
+
+    public static final Parcelable.Creator<Tabata> CREATOR
+            = new Parcelable.Creator<Tabata>() {
+        public Tabata createFromParcel(Parcel in) {
+            return new Tabata(
+                    in.readString(),
+                    in.readInt(),
+                    in.readInt(),
+                    in.readInt(),
+                    in.readInt()
+            );
+        }
+
+        public Tabata[] newArray(int size) {
+            return new Tabata[size];
+        }
+    };
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(name);
+        out.writeInt(prepareTime);
+        out.writeInt(workTime);
+        out.writeInt(restTime);
+        out.writeInt(cyclesNumber);
     }
 
     public String getName() {

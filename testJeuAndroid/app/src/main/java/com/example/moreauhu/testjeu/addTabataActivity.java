@@ -16,17 +16,15 @@ import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
 public class addTabataActivity extends AppCompatActivity {
 
     //  VALUES
-    static final String  STATE_NAME      = "name";
-    static final String  STATE_PREPARE   = "prepare";
-    static final String  STATE_WORK      = "work";
-    static final String  STATE_REST      = "rest";
-    static final String  STATE_CYCLES    = "cycles";
+    static final String  STATE_TABATA    = "tabata";
 
-    private String  name    = "";
-    private Integer prepare = MainActivity.DEFAULT_PREPARE;
-    private Integer work    = MainActivity.DEFAULT_WORK;
-    private Integer rest    = MainActivity.DEFAULT_REST;
-    private Integer cycles  = MainActivity.DEFAULT_CYCLES;
+    private Tabata tabata = new Tabata(
+            MainActivity.DEFAULT_NAME,
+            MainActivity.DEFAULT_PREPARE,
+            MainActivity.DEFAULT_WORK,
+            MainActivity.DEFAULT_REST,
+            MainActivity.DEFAULT_CYCLES
+    );
 
     private TabataFactory tabataFactory = new TabataFactory();
 
@@ -44,22 +42,13 @@ public class addTabataActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(STATE_NAME, this.name);
-        savedInstanceState.putInt(STATE_PREPARE, this.prepare);
-        savedInstanceState.putInt(STATE_WORK   , this.work);
-        savedInstanceState.putInt(STATE_REST   , this.rest);
-        savedInstanceState.putInt(STATE_CYCLES , this.cycles);
-
+        savedInstanceState.putParcelable(STATE_TABATA, this.tabata);
         super.onSaveInstanceState(savedInstanceState);
     }
 
 
     private void restoreSavedValues(Bundle savedInstanceState) {
-        this.name    = savedInstanceState.getString(STATE_NAME);
-        this.prepare = savedInstanceState.getInt(STATE_PREPARE);
-        this.work    = savedInstanceState.getInt(STATE_WORK);
-        this.rest    = savedInstanceState.getInt(STATE_REST);
-        this.cycles  = savedInstanceState.getInt(STATE_CYCLES);
+        this.tabata  = savedInstanceState.getParcelable(STATE_TABATA);
     }
 
     private void init() {
@@ -68,10 +57,14 @@ public class addTabataActivity extends AppCompatActivity {
     }
 
     private void initValues() {
-        ((TextView) findViewById(R.id.number_prepare)).setText(this.prepare.toString());
-        ((TextView) findViewById(R.id.number_work)).setText(this.work.toString());
-        ((TextView) findViewById(R.id.number_rest)).setText(this.rest.toString());
-        ((TextView) findViewById(R.id.number_cycles)).setText(this.cycles.toString());
+        ((TextView) findViewById(R.id.number_prepare)).setText(getStringValueOfInt(this.tabata.getPrepareTime()));
+        ((TextView) findViewById(R.id.number_work)).setText(getStringValueOfInt(this.tabata.getWorkTime()));
+        ((TextView) findViewById(R.id.number_rest)).setText(getStringValueOfInt(this.tabata.getRestTime()));
+        ((TextView) findViewById(R.id.number_cycles)).setText(getStringValueOfInt(this.tabata.getCyclesNumber()));
+    }
+
+    private String getStringValueOfInt(Integer integer) {
+        return integer.toString();
     }
 
     private void initRepeatImageButtons() {
@@ -133,17 +126,17 @@ public class addTabataActivity extends AppCompatActivity {
     private int appliedActionOnValueByTextViewId(int id, String action) {
         int value = 0;
         if (id == R.id.number_prepare) {
-            value = this.takeActionOnValue(this.prepare, action);
-            this.prepare = value;
+            value = this.takeActionOnValue(this.tabata.getPrepareTime(), action);
+            this.tabata.setPrepareTime(value);
         } else if (id == R.id.number_work) {
-            value = this.takeActionOnValue(this.work, action);
-            this.work = value;
+            value = this.takeActionOnValue(this.tabata.getWorkTime(), action);
+            this.tabata.setWorkTime(value);
         } else if (id == R.id.number_rest) {
-            value = this.takeActionOnValue(this.rest, action);
-            this.rest = value;
+            value = this.takeActionOnValue(this.tabata.getRestTime(), action);
+            this.tabata.setRestTime(value);
         } else if (id == R.id.number_cycles) {
-            value = this.takeActionOnValue(this.cycles, action);
-            this.cycles = value;
+            value = this.takeActionOnValue(this.tabata.getCyclesNumber(), action);
+            this.tabata.setCyclesNumber(value);
         }
 
         return value;

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     static final String  STATE_WORK      = "work";
     static final String  STATE_REST      = "rest";
     static final String  STATE_CYCLES    = "cycles";
+    static final String  DEFAULT_NAME    = "";
     static final Integer DEFAULT_PREPARE = 10;
     static final Integer DEFAULT_WORK    = 20;
     static final Integer DEFAULT_REST    = 10;

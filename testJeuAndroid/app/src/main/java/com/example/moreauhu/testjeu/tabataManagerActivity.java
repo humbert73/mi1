@@ -17,6 +17,7 @@ import com.example.moreauhu.testjeu.entity.State;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
 import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class tabataManagerActivity extends AppCompatActivity {
@@ -25,7 +26,6 @@ public class tabataManagerActivity extends AppCompatActivity {
     private ArrayList<Button> buttons = new ArrayList<>();
     private ArrayList<Button> buttonsSelected = new ArrayList<>();
     private ArrayList<Tabata> tabatas;
-    private ArrayList<Tabata> tabatasToDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +50,18 @@ public class tabataManagerActivity extends AppCompatActivity {
 
     public void onClickOnDelete(View v) {
         ArrayList<String> tabataNames = new ArrayList<>();
+        String tabataTextInformation;
         for (Button button : buttonsSelected) {
-            tabataNames.add((String)button.getText());
+            tabataTextInformation = (String) button.getText();
+            tabataNames.add(this.extractNameFromInformation(tabataTextInformation));
         }
         this.tabataFactory.deleteTabatasByNames(tabataNames);
         this.updateDisplay();
+    }
+
+    private String extractNameFromInformation(String information) {
+        String infos[]  = information.split(" [(]");
+        return infos[0];
     }
 
     private void init() {
