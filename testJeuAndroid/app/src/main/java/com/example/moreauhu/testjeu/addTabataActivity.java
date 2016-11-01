@@ -16,11 +16,13 @@ import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
 public class addTabataActivity extends AppCompatActivity {
 
     //  VALUES
+    static final String  STATE_NAME      = "name";
     static final String  STATE_PREPARE   = "prepare";
     static final String  STATE_WORK      = "work";
     static final String  STATE_REST      = "rest";
     static final String  STATE_CYCLES    = "cycles";
 
+    private String  name    = "";
     private Integer prepare = MainActivity.DEFAULT_PREPARE;
     private Integer work    = MainActivity.DEFAULT_WORK;
     private Integer rest    = MainActivity.DEFAULT_REST;
@@ -42,6 +44,7 @@ public class addTabataActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putString(STATE_NAME, this.name);
         savedInstanceState.putInt(STATE_PREPARE, this.prepare);
         savedInstanceState.putInt(STATE_WORK   , this.work);
         savedInstanceState.putInt(STATE_REST   , this.rest);
@@ -52,6 +55,7 @@ public class addTabataActivity extends AppCompatActivity {
 
 
     private void restoreSavedValues(Bundle savedInstanceState) {
+        this.name    = savedInstanceState.getString(STATE_NAME);
         this.prepare = savedInstanceState.getInt(STATE_PREPARE);
         this.work    = savedInstanceState.getInt(STATE_WORK);
         this.rest    = savedInstanceState.getInt(STATE_REST);
