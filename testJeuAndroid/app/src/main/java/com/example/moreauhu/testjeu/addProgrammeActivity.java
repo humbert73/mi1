@@ -1,6 +1,8 @@
 package com.example.moreauhu.testjeu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -77,10 +79,17 @@ public class addProgrammeActivity extends AppCompatActivity {
 
     public void onClickStart(View v) {
         ArrayList<Tabata> programme = this.getProgramme();
-        Intent intent = new Intent(this, tabataActivity.class);
-        intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("programme", programme);
-        startActivity(intent);
+        if (programme.isEmpty()) {
+            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+            dlgAlert.setMessage(R.string.dialogAlert);
+            dlgAlert.create().show();
+        } else {
+            Intent intent = new Intent(this, tabataActivity.class);
+            intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("programme", programme);
+            startActivity(intent);
+        }
+
     }
 
     private ArrayList<Tabata> getProgramme() {
