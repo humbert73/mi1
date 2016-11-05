@@ -97,18 +97,19 @@ public class tabataManagerActivity extends AppCompatActivity {
         }
     }
 
-    private String createTabataTextInformation(Tabata tabata) {
-        String separation = ", ";
-        return tabata.getName() + " (" +
-            State.PREPARE.getShortName() + tabata.getPrepareTime() + separation +
-            State.WORK.getShortName()    + tabata.getWorkTime()    + separation +
-            State.REST.getShortName()    + tabata.getRestTime()    +
-            ") x" + tabata.getCyclesNumber();
-    }
-
     private void updateDisplay() {
         LinearLayout layout = (LinearLayout) findViewById(R.id.tabatas);
         layout.removeAllViewsInLayout();
         init();
+    }
+
+    private String createTabataTextInformation(Tabata tabata) {
+        String separation_state = ", ";
+        String separation = ": ";
+        return tabata.getName() + " (" +
+                State.PREPARE.getShortName() + separation + tabata.getPrepareTime() + separation_state +
+                State.WORK.getShortName()    + separation + tabata.getWorkTime()    + separation_state +
+                State.REST.getShortName()    + separation + tabata.getRestTime()    +
+                ") x" + tabata.getCyclesNumber();
     }
 }

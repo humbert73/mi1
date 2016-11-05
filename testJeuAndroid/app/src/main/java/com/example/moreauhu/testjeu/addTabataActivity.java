@@ -143,9 +143,9 @@ public class addTabataActivity extends AppCompatActivity {
     }
 
     private int takeActionOnValue(int value, String action) {
-        if (action.equals("minus")) {
+        if (action.equals("minus") && value > MainActivity.MIN_VALUE) {
             value--;
-        } else if (action.equals("plus")) {
+        } else if (action.equals("plus") && value < MainActivity.MAX_VALUE) {
             value++;
         }
 

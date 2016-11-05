@@ -26,15 +26,17 @@ public class MainActivity extends AppCompatActivity
     static final int REPEAT_LISTENER_INITIAL_INTERVAL = 400;
     static final int REPEAT_LISTENER_NORMAL_INTERVAL  = 50;
 
-    static final String  STATE_PREPARE   = "prepare";
-    static final String  STATE_WORK      = "work";
-    static final String  STATE_REST      = "rest";
-    static final String  STATE_CYCLES    = "cycles";
-    static final String  DEFAULT_NAME    = "";
+    static final String  STATE_PREPARE = "prepare";
+    static final String  STATE_WORK = "work";
+    static final String  STATE_REST = "rest";
+    static final String  STATE_CYCLES = "cycles";
+    static final String  DEFAULT_NAME = "";
     static final Integer DEFAULT_PREPARE = 10;
-    static final Integer DEFAULT_WORK    = 20;
-    static final Integer DEFAULT_REST    = 10;
-    static final Integer DEFAULT_CYCLES  = 8;
+    static final Integer DEFAULT_WORK = 20;
+    static final Integer DEFAULT_REST = 10;
+    static final Integer DEFAULT_CYCLES = 8;
+    static final Integer MIN_VALUE = 0;
+    static final Integer MAX_VALUE = 999;
 
     private Integer prepare = DEFAULT_PREPARE;
     private Integer work = DEFAULT_WORK;
@@ -168,9 +170,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private int takeActionOnValue(int value, String action) {
-        if (action.equals("minus")) {
+        if (action.equals("minus") && value > MainActivity.MIN_VALUE) {
             value--;
-        } else if (action.equals("plus")) {
+        } else if (action.equals("plus") && value < MainActivity.MAX_VALUE) {
             value++;
         }
 

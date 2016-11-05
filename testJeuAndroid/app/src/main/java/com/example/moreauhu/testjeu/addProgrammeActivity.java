@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.example.moreauhu.testjeu.entity.State;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class addProgrammeActivity extends AppCompatActivity {
                     onClickOnTabata(v);
                 }
             });
-            button.setText(tabata.getName());
+            button.setText(this.createTabataTextInformation(tabata));
             layout.addView(button);
             this.buttons.add(button);
         }
@@ -102,5 +103,15 @@ public class addProgrammeActivity extends AppCompatActivity {
         }
 
         return programme;
+    }
+
+    private String createTabataTextInformation(Tabata tabata) {
+        String separation_state = ", ";
+        String separation = ": ";
+        return tabata.getName() + " (" +
+                State.PREPARE.getShortName() + separation + tabata.getPrepareTime() + separation_state +
+                State.WORK.getShortName()    + separation + tabata.getWorkTime()    + separation_state +
+                State.REST.getShortName()    + separation + tabata.getRestTime()    +
+                ") x" + tabata.getCyclesNumber();
     }
 }
