@@ -1,16 +1,18 @@
 <resources>
-    <string name="app_name">TestJeu</string>
+    <!--Main Information-->
+    <string name="app_name">Tabata Manager</string>
+
+    <!--Main Activity-->
     <string name="label_name">Nom :</string>
     <string name="label_prepare">Prepare</string>
     <string name="label_work">Work</string>
     <string name="label_rest">Rest</string>
     <string name="label_cycles">Cycles</string>
 
+    <!--Button-->
     <string name="button_start">Start</string>
     <string name="button_add">Ajouter</string>
     <string name="button_delete">Supprimer</string>
-
-
     <string name="button_plus">+</string>
     <string name="button_minus">-</string>
 
@@ -26,6 +28,11 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_test">test</string>
-    <string name="title_activity_tabata_manager">tabataManagerActivity</string>
+    <string name="title_activity_tabata_manager">@string/app_name</string>
     <string name="dialogAlert">Il faut selectionner un tabata avant de pouvoir lancer un programme</string>
+
+    <!-- Add Programme Activity -->
+    <string name="label_choose_tabatas">Vos tabatas</string>
+    <string name="label_selected_tabatas">Tabatas selectionnés</string>
+
 </resources>
