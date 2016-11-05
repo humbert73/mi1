@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.example.moreauhu.testjeu.entity.State;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
+import com.example.moreauhu.testjeu.entity.Tabata.TabataFactory;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ public class addProgrammeActivity extends AppCompatActivity {
     private ArrayList<Button> buttons = new ArrayList<>();
     private ArrayList<Button> buttons_clicked = new ArrayList<>();
     private ArrayList<Tabata> tabatas;
+    private TabataFactory tabataFactory = new TabataFactory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class addProgrammeActivity extends AppCompatActivity {
 
     public void initTabatas() {
         LinearLayout layout = (LinearLayout) findViewById(R.id.tabatas);
-        this.tabatas = new ArrayList<>(Tabata.listAll(Tabata.class));
+        this.tabatas = this.tabataFactory.getTabatas();
 
         for (Tabata tabata : this.tabatas) {
             Button button = new Button(this);
@@ -73,16 +75,6 @@ public class addProgrammeActivity extends AppCompatActivity {
         layout.addView(button);
     }
 
-    private Tabata searchTabataByName(String name) {
-        for (Tabata tabata : this.tabatas) {
-            if (tabata.getName().equals(name)) {
-                return tabata;
-            }
-        }
-
-        return null;
-    }
-
     public void onClickStart(View v) {
         ArrayList<Tabata> programme = this.getProgramme();
         Intent intent = new Intent(this, tabataActivity.class);
@@ -96,13 +88,18 @@ public class addProgrammeActivity extends AppCompatActivity {
         ArrayList<Tabata> programme = new ArrayList<>();
 
         for (Button button : buttons_clicked) {
-            tabata = this.searchTabataByName((String) button.getText());
+            tabata = this.tabataFactory.searchTabataByName(this.extractNameFromInformation((String) button.getText()));
             if (tabata != null) {
                 programme.add(tabata);
             }
         }
 
         return programme;
+    }
+
+    private String extractNameFromInformation(String information) {
+        String infos[]  = information.split(" [(]");
+        return infos[0];
     }
 
     private String createTabataTextInformation(Tabata tabata) {

@@ -29,6 +29,21 @@ public class TabataFactory {
         }
     }
 
+    public Tabata searchTabataByName(String name) {
+        ArrayList<Tabata> tabatas = new ArrayList<>(Tabata.listAll(Tabata.class));
+        for (Tabata tabata : tabatas) {
+            if (tabata.getName().equals(name)) {
+                return tabata;
+            }
+        }
+
+        return null;
+    }
+
+    public ArrayList<Tabata> getTabatas() {
+        return new ArrayList<>(Tabata.listAll(Tabata.class));
+    }
+
     private void updateTabata(Tabata tabata, int prepareTime, int workTime, int restTime, int cyclesNumber) {
         tabata.setPrepareTime(prepareTime);
         tabata.setWorkTime(workTime);
