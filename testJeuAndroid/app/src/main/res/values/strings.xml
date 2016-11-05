@@ -35,4 +35,11 @@
     <string name="label_choose_tabatas">Vos tabatas</string>
     <string name="label_selected_tabatas">Tabatas selectionnés</string>
 
+    <!--Menu-->
+    <string name="menu_title">Gestionnaire de Tabatas</string>
+    <string name="menu_add_tabata">Créer un tabata</string>
+    <string name="menu_config_tabata">Gestion des tabatas</string>
+    <string name="menu_start_programme">Démarrer une activité</string>
+    <string name="menu_programme">Programme</string>
+
 </resources>
