@@ -161,7 +161,6 @@ public class tabataActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         customHandler.removeCallbacks(updateTimerThread);
-
         super.onDestroy();
     }
 
@@ -373,9 +372,25 @@ public class tabataActivity extends AppCompatActivity {
     private void updateDisplay(State state) {
         ViewGroup viewGroup = (ViewGroup) findViewById(R.id.fullscreen_content_controls);
         TextView title = (TextView) findViewById(R.id.title_state);
+        TextView tabata_name = (TextView) findViewById(R.id.tabata_name);
+        TextView cycles = (TextView) findViewById(R.id.tabata_cycles);
+        if (state == State.PREPARE) {
+            TextView cycles_total = (TextView) findViewById(R.id.tabata_cycles_total);
+            cycles_total.setText(this.getStringValueOfInt(this.tabata.getCyclesNumber()));
+            cycles.setText(this.getStringValueOfInt(this.tabata.getCyclesNumber()));
+        } else {
+            cycles.setText(this.getStringValueOfInt(this.cyclesNumber+1));
+        }
 
         viewGroup.setBackgroundColor(state.getColor());
         title.setText(state.getTitle());
+        tabata_name.setText(this.tabata.getName());
+
     }
+
+    private String getStringValueOfInt(Integer value) {
+        return value.toString();
+    }
+
     /*------------------------TABATA PART------------------------*/
 }

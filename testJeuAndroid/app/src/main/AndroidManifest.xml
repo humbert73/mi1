@@ -42,7 +42,7 @@
         <activity
             android:name=".tabataManagerActivity"
             android:label="@string/title_activity_tabata_manager"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
