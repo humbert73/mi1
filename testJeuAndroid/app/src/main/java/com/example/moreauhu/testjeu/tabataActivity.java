@@ -1,5 +1,6 @@
 package com.example.moreauhu.testjeu;
 
+import android.media.MediaPlayer;
 import android.annotation.SuppressLint;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
@@ -115,6 +116,11 @@ public class tabataActivity extends AppCompatActivity {
     private static final String PLAY ="play";
     private static final String PAUSE="pause";
 
+//    private MediaPlayer simple_beep = MediaPlayer.create(this, R.raw.beep32);
+    private MediaPlayer final_beep;
+    private MediaPlayer simple_beep;
+    private int time_noise;
+
     // HANDLER
     private Handler customHandler = new Handler();
     /*------------------------TABATA PART------------------------*/
@@ -208,7 +214,9 @@ public class tabataActivity extends AppCompatActivity {
     /*------------------------TABATA PART------------------------*/
     private void init()
     {
-        this.programme = new ArrayList<>();
+        this.programme   = new ArrayList<>();
+        this.final_beep  = MediaPlayer.create(this, R.raw.beep);
+        this.simple_beep = MediaPlayer.create(this, R.raw.beep32);
 
         // Initialisation en fonction du lancement en mode quick start ou d'un programme
         if ((ArrayList<Tabata>) getIntent().getSerializableExtra("programme") != null) {
@@ -250,6 +258,9 @@ public class tabataActivity extends AppCompatActivity {
         return this.programme.get(this.programme.size() - this.etape_restante);
     }
 
+    /*
+     *  Body of timer
+     */
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;// Calcul du temps écoulé
@@ -268,6 +279,7 @@ public class tabataActivity extends AppCompatActivity {
     }
 
     private void restartOrStopTimer(Runnable run) {
+        this.playNoise();
         if (this.isTheEnd()) {
             // Arrêt de updateTimerThread
             customHandler.removeCallbacks(updateTimerThread);
@@ -277,7 +289,24 @@ public class tabataActivity extends AppCompatActivity {
             } else if (this.isTheTimerEnd()) {
                 this.changeState();
             }
-            customHandler.postDelayed(run, 0);
+            customHandler.postDelayed(run, 10);
+        }
+    }
+
+    private void playNoise() {
+        if (time_noise != timeElapsed) {
+            time_noise = timeElapsed;
+            if (time_noise == 2 || time_noise == 1) {
+                if (this.simple_beep.isPlaying()) {
+                    this.simple_beep.stop();
+                }
+                this.simple_beep.start();
+            } else if (time_noise == 0) {
+                if (this.simple_beep.isPlaying()) {
+                    this.simple_beep.stop();
+                }
+                this.final_beep.start();
+            }
         }
     }
 
