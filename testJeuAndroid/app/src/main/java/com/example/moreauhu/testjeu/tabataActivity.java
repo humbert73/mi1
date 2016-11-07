@@ -159,6 +159,13 @@ public class tabataActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        customHandler.removeCallbacks(updateTimerThread);
+
+        super.onDestroy();
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
