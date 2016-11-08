@@ -15,7 +15,7 @@ public class Programme implements Serializable {
     ArrayList<Tabata> tabatas;
 
     public Programme(String name, ArrayList<Tabata> tabatas) {
-        this.name         = name;
+        this.name     = name;
         this.tabatas  = tabatas;
     }
 

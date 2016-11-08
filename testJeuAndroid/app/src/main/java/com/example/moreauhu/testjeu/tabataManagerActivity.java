@@ -43,17 +43,16 @@ public class tabataManagerActivity extends AppCompatActivity {
         Button button = (Button) v;
         if (! buttonsSelected.contains(button)) {
             buttonsSelected.add(button);
-            button.setBackgroundColor(State.WORK.getColor());
+            button.getBackground().setColorFilter(State.WORK.getColor(), PorterDuff.Mode.ADD);
         } else {
             buttonsSelected.remove(button);
-            button.setBackgroundColor(State.REST.getColor());
+            button.getBackground().setColorFilter(BIND_ABOVE_CLIENT, PorterDuff.Mode.DARKEN);
         }
     }
 
     public boolean onLongClickOnTabata(View v) {
         AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-        String tabataName = this.extractNameFromInformation(((TextView)v).getText().toString());
-        Tabata tabata = this.tabataFactory.findTabataByName(tabataName);
+        Tabata tabata = this.tabataFactory.findTabataByName(((TextView)v).getText().toString());
 
         String tabataInformations = this.createTabataTextInformation(tabata);
         dlgAlert.setMessage(tabataInformations);
@@ -64,18 +63,11 @@ public class tabataManagerActivity extends AppCompatActivity {
 
     public void onClickOnDelete(View v) {
         ArrayList<String> tabataNames = new ArrayList<>();
-        String tabataTextInformation;
         for (Button button : buttonsSelected) {
-            tabataTextInformation = (String) button.getText();
-            tabataNames.add(this.extractNameFromInformation(tabataTextInformation));
+            tabataNames.add((String) button.getText());
         }
         this.tabataFactory.deleteTabatasByNames(tabataNames);
         this.updateDisplay();
-    }
-
-    private String extractNameFromInformation(String information) {
-        String infos[]  = information.split(" [(]");
-        return infos[0];
     }
 
     private void init() {
