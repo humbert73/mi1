@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.moreauhu.testjeu.entity.State;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
@@ -41,7 +42,13 @@ public class addProgrammeActivity extends AppCompatActivity {
                     onClickOnTabata(v);
                 }
             });
-            button.setText(this.createTabataTextInformation(tabata));
+            button.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return onLongClickOnTabata(v);
+                }
+            });
+            button.setText(tabata.getName());
             layout.addView(button);
             this.buttons.add(button);
         }
@@ -58,6 +65,18 @@ public class addProgrammeActivity extends AppCompatActivity {
         });
         buttons_clicked.add(buttonClicked);
         addSelectedTabataButton(buttonClicked);
+    }
+
+    public boolean onLongClickOnTabata(View v) {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        String tabataName = ((TextView)v).getText().toString();
+        Tabata tabata = this.tabataFactory.findTabataByName(tabataName);
+
+        String tabataInformations = this.createTabataTextInformation(tabata);
+        dlgAlert.setMessage(tabataInformations);
+        dlgAlert.create().show();
+
+        return true;
     }
 
     public void onClickOnTabataSelected(View v) {
@@ -97,7 +116,7 @@ public class addProgrammeActivity extends AppCompatActivity {
         ArrayList<Tabata> programme = new ArrayList<>();
 
         for (Button button : buttons_clicked) {
-            tabata = this.tabataFactory.searchTabataByName(this.extractNameFromInformation((String) button.getText()));
+            tabata = this.tabataFactory.searchTabataByName((String) button.getText());
             if (tabata != null) {
                 programme.add(tabata);
             }
@@ -106,18 +125,16 @@ public class addProgrammeActivity extends AppCompatActivity {
         return programme;
     }
 
-    private String extractNameFromInformation(String information) {
-        String infos[]  = information.split(" [(]");
-        return infos[0];
-    }
-
     private String createTabataTextInformation(Tabata tabata) {
-        String separation_state = ", ";
-        String separation = ": ";
-        return tabata.getName() + " (" +
-                State.PREPARE.getShortName() + separation + tabata.getPrepareTime() + separation_state +
-                State.WORK.getShortName()    + separation + tabata.getWorkTime()    + separation_state +
-                State.REST.getShortName()    + separation + tabata.getRestTime()    +
-                ") x" + tabata.getCyclesNumber();
+        String separation = " : ";
+        String tab = "\t";
+        String eol = "\n";
+        String tabata_information = tab + tabata.getName() + eol + eol +
+                State.PREPARE.getShortName() + separation + tab + tab + tabata.getPrepareTime() + eol +
+                State.WORK.getShortName()    + separation + tab + tab + tabata.getWorkTime()    + eol +
+                State.REST.getShortName()    + separation + tab + tab + tabata.getRestTime()    + eol +
+                "Cycles" + separation + tab + tabata.getCyclesNumber();
+
+        return tabata_information;
     }
 }

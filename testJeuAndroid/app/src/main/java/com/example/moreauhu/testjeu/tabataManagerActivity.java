@@ -6,12 +6,14 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.moreauhu.testjeu.entity.State;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
@@ -46,6 +48,18 @@ public class tabataManagerActivity extends AppCompatActivity {
             buttonsSelected.remove(button);
             button.setBackgroundColor(State.REST.getColor());
         }
+    }
+
+    public boolean onLongClickOnTabata(View v) {
+        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        String tabataName = this.extractNameFromInformation(((TextView)v).getText().toString());
+        Tabata tabata = this.tabataFactory.findTabataByName(tabataName);
+
+        String tabataInformations = this.createTabataTextInformation(tabata);
+        dlgAlert.setMessage(tabataInformations);
+        dlgAlert.create().show();
+
+        return true;
     }
 
     public void onClickOnDelete(View v) {
@@ -91,7 +105,13 @@ public class tabataManagerActivity extends AppCompatActivity {
                     onClickOnTabata(v);
                 }
             });
-            button.setText(this.createTabataTextInformation(tabata));
+            button.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return onLongClickOnTabata(v);
+                }
+            });
+            button.setText(tabata.getName());
             layout.addView(button);
             this.buttons.add(button);
         }
@@ -104,12 +124,15 @@ public class tabataManagerActivity extends AppCompatActivity {
     }
 
     private String createTabataTextInformation(Tabata tabata) {
-        String separation_state = ", ";
-        String separation = ": ";
-        return tabata.getName() + " (" +
-                State.PREPARE.getShortName() + separation + tabata.getPrepareTime() + separation_state +
-                State.WORK.getShortName()    + separation + tabata.getWorkTime()    + separation_state +
-                State.REST.getShortName()    + separation + tabata.getRestTime()    +
-                ") x" + tabata.getCyclesNumber();
+        String separation = " : ";
+        String tab = "\t";
+        String eol = "\n";
+        String tabata_information = tab + tabata.getName() + eol + eol +
+                State.PREPARE.getShortName() + separation + tab + tab + tabata.getPrepareTime() + eol +
+                State.WORK.getShortName()    + separation + tab + tab + tabata.getWorkTime()    + eol +
+                State.REST.getShortName()    + separation + tab + tab + tabata.getRestTime()    + eol +
+                "Cycles" + separation + tab + tabata.getCyclesNumber();
+
+        return tabata_information;
     }
 }

@@ -51,7 +51,7 @@ public class TabataFactory {
         tabata.setCyclesNumber(cyclesNumber);
     }
 
-    private Tabata findTabataByName(String name) {
+    public Tabata findTabataByName(String name) {
         List<Tabata> tabatas = Tabata.listAll(Tabata.class);
         for (Tabata tabata : tabatas) {
             if (tabata.getName().compareTo(name) == 0) { // compareTo() return 0 if equals

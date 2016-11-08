@@ -113,7 +113,7 @@ public class addTabataActivity extends AppCompatActivity {
 
     public void onClickAdd(View v) {
         this.createTabata();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, tabataManagerActivity.class);
         intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
