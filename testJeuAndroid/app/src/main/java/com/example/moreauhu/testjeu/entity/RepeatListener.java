@@ -28,15 +28,27 @@ public class RepeatListener implements OnTouchListener {
     private final int normalInterval;
     private final OnClickListener clickListener;
 
+    // pour la méthode faster()
+    private int count = 0;
+    private int interval;
+
     private Runnable handlerRunnable = new Runnable() {
         @Override
         public void run() {
-            handler.postDelayed(this, normalInterval);
+            faster();
+            handler.postDelayed(this, interval);
             clickListener.onClick(downView);
         }
     };
 
     private View downView;
+
+    // augmente la vitesse de simulation des clicks
+    private void faster()
+    {
+        count++;
+        interval = normalInterval - (10*(count/10));
+    }
 
     /**
      * @param initialInterval The interval after first click event
@@ -68,6 +80,8 @@ public class RepeatListener implements OnTouchListener {
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                // réinitialisation de la vitesse
+                count = 0;
                 handler.removeCallbacks(handlerRunnable);
                 downView.setPressed(false);
                 downView = null;

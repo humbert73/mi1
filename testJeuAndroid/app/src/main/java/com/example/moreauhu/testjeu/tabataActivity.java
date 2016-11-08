@@ -1,5 +1,6 @@
 package com.example.moreauhu.testjeu;
 
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.annotation.SuppressLint;
 import android.os.SystemClock;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.example.moreauhu.testjeu.entity.State;
 import com.example.moreauhu.testjeu.entity.Tabata.Tabata;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -287,6 +290,7 @@ public class tabataActivity extends AppCompatActivity {
     private void restartOrStopTimer(Runnable run) {
         this.playNoise();
         if (this.isTheEnd()) {
+            this.displayEnding();
             // Arrêt de updateTimerThread
             customHandler.removeCallbacks(updateTimerThread);
         } else {
@@ -297,6 +301,15 @@ public class tabataActivity extends AppCompatActivity {
             }
             customHandler.postDelayed(run, 10);
         }
+    }
+
+    private void displayEnding() {
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.fullscreen_content_controls);
+        TextView textView = (TextView) findViewById(R.id.timerValue);
+
+        textView.setText("Terminé !");
+        textView.setTextSize(60);
+        viewGroup.setBackgroundColor(State.PREPARE.getColor());
     }
 
     private void playNoise() {
@@ -377,9 +390,9 @@ public class tabataActivity extends AppCompatActivity {
         if (state == State.PREPARE) {
             TextView cycles_total = (TextView) findViewById(R.id.tabata_cycles_total);
             cycles_total.setText(this.getStringValueOfInt(this.tabata.getCyclesNumber()));
-            cycles.setText(this.getStringValueOfInt(this.tabata.getCyclesNumber()));
+            cycles.setText(this.getStringValueOfInt(1));
         } else {
-            cycles.setText(this.getStringValueOfInt(this.cyclesNumber+1));
+            cycles.setText(this.getStringValueOfInt(this.tabata.getCyclesNumber()-this.cyclesNumber));
         }
 
         viewGroup.setBackgroundColor(state.getColor());

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity
 
     //  VALUES
     static final int REPEAT_LISTENER_INITIAL_INTERVAL = 400;
-    static final int REPEAT_LISTENER_NORMAL_INTERVAL  = 50;
+    static final int REPEAT_LISTENER_NORMAL_INTERVAL  = 100;
 
     static final String  STATE_PREPARE = "prepare";
     static final String  STATE_WORK = "work";
@@ -225,6 +225,6 @@ public class MainActivity extends AppCompatActivity
         Integer cyclesNumber = Integer.valueOf((String) cyclesTextView.getText());
 
         //TODO: implements Parceble
-        return this.tabataFactory.addOrReplaceTabata("quick", prepareTime, workTime, restTime, cyclesNumber);
+        return this.tabataFactory.addOrReplaceTabata("quick start", prepareTime, workTime, restTime, cyclesNumber);
     }
 }
