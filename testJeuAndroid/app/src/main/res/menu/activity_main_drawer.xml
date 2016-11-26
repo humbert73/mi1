@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="@string/menu_title">
-        <menu>
-            <item
-                android:id="@+id/nav_add_tabata"
-                android:icon="@drawable/ic_menu_add"
-                android:title="@string/menu_add_tabata"/>
-            <item
-                android:id="@+id/nav_gestion_tabata"
-                android:icon="@drawable/ic_menu_gestion"
-                android:title="@string/menu_config_tabata" />
-        </menu>
-    </item>
-    <item android:title="@string/menu_programme">
-        <menu>
-            <item
-                android:id="@+id/nav_add_programme"
-                android:icon="@drawable/ic_work"
-                android:title="@string/menu_start_programme" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_gestion_tabata"
+        android:icon="@drawable/ic_menu_gestion"
+        android:title="@string/menu_config_tabata" />
+    <item
+        android:id="@+id/nav_add_programme"
+        android:icon="@drawable/ic_work"
+        android:title="@string/menu_start_programme" />
 </menu>

@@ -66,6 +66,7 @@ public class tabataManagerActivity extends AppCompatActivity {
         for (Button button : buttonsSelected) {
             tabataNames.add((String) button.getText());
         }
+        buttonsSelected.clear();
         this.tabataFactory.deleteTabatasByNames(tabataNames);
         this.updateDisplay();
     }

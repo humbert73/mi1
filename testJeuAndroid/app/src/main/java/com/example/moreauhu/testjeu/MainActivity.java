@@ -95,10 +95,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_add_tabata) {
-            Intent intent = new Intent(this, addTabataActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_gestion_tabata) {
+        if (id == R.id.nav_gestion_tabata) {
             Intent intent = new Intent(this, tabataManagerActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_add_programme) {
@@ -224,7 +221,6 @@ public class MainActivity extends AppCompatActivity
         Integer restTime     = Integer.valueOf((String) restTextView.getText());
         Integer cyclesNumber = Integer.valueOf((String) cyclesTextView.getText());
 
-        //TODO: implements Parceble
         return this.tabataFactory.addOrReplaceTabata("quick start", prepareTime, workTime, restTime, cyclesNumber);
     }
 }

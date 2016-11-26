@@ -11,6 +11,7 @@
 
     <!--Button-->
     <string name="button_start">Start</string>
+    <string name="button_quick_start">Quick start</string>
     <string name="button_add">Ajouter</string>
     <string name="button_delete">Supprimer</string>
     <string name="button_plus">+</string>

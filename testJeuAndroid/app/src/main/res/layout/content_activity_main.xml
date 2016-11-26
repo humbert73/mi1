@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:onClick="onClickStart"
-            android:text="@string/button_start"
+            android:text="@string/button_quick_start"
             android:textSize="@dimen/button" />
 
 </RelativeLayout>
